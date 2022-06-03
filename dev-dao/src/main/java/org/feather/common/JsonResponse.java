@@ -27,6 +27,10 @@ public class JsonResponse<T> {
         this.code="200";
     }
 
+    public JsonResponse() {
+
+    }
+
     public static JsonResponse<String> success(){
         return  new JsonResponse<>(null);
     }
