@@ -16,4 +16,13 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
+
+    <dependencies>
+        <dependency>
+            <groupId>org.feather</groupId>
+            <artifactId>dev-dao</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 </project>
