@@ -3,7 +3,7 @@ package org.feather.api;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.feather.common.JsonResponse;
-import org.feather.domain.UserDTO;
+import org.feather.dto.UserDTO;
 import org.feather.service.IUserService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,5 +37,12 @@ public class UserApi {
     public JsonResponse<String> addUser(@RequestBody @Validated UserDTO userDTO) {
         userService.addUser(userDTO);
         return JsonResponse.success();
+    }
+
+    @ApiOperation(value = "导出用户",httpMethod = "POST", produces = "application/json")
+    @PostMapping("/exportExcel")
+    public  JsonResponse<String> exportExcel(){
+            userService.exportExcel();
+            return JsonResponse.success("导出成功");
     }
 }

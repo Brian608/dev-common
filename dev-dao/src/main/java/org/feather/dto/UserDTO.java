@@ -1,4 +1,4 @@
-package org.feather.domain;
+package org.feather.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

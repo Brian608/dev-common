@@ -1,6 +1,8 @@
 package org.feather.config;
 
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -20,10 +22,15 @@ import springfox.documentation.spring.web.plugins.Docket;
  * @since: 2022/6/3 11:39
  * @version: 1.0
  */
+@Slf4j
 @Configuration
 public class Swagger3Config {
-    @Bean
+        @Value("${server.port:}")
+        private String port;
+
+     @Bean
     public Docket createRestApi() {
+         log.info("接口地址:"+"http://localhost:"+port+"/swagger-ui/");
         return new Docket(DocumentationType.OAS_30)
                 .apiInfo(apiInfo())
                 .select()
