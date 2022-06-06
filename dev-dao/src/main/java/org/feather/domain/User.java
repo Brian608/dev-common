@@ -1,5 +1,6 @@
 package org.feather.domain;
 
+import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.format.DateTimeFormat;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -8,9 +9,8 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.feather.convert.GenderConverter;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -28,7 +28,7 @@ public class User extends Model<User> {
 
     private static final long serialVersionUID=1L;
 
-    @ExcelProperty(index = 0, value = "id")
+    @ExcelIgnore
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
@@ -45,7 +45,7 @@ public class User extends Model<User> {
     /**
      * 1 男 2 女
      */
-    @ExcelProperty(index = 4, value = "性别")
+    @ExcelProperty(index = 4, value = "性别",converter = GenderConverter.class)
     private Integer gender;
 
 
