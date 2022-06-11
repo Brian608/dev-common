@@ -76,9 +76,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>  implements I
     public void importUser(MultipartFile file) throws IOException {
         ExcelReader reader = ExcelUtil.getReader(file.getInputStream());
         List<UserDTO> readList= reader.readAll(UserDTO.class);
-        System.out.println("------读取内容开始");
-        readList.forEach(System.out::println);
-        System.out.println("------读取内容结束");
         if (!readList.isEmpty()){
             //去除第一行的中文标题
             readList.remove(0);
@@ -89,7 +86,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>  implements I
                 user.setCreateTime(new Date());
                 list.add(user);
             });
-            list.forEach(System.out::println);
             this.saveBatch(list);
         }
 
