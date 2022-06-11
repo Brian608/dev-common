@@ -6,12 +6,12 @@ spring:
       primary: db1 # 配置默认数据库
       datasource:
         db1: # 数据源1配置
-          url: jdbc:mysql://localhost:3306/lottery?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+          url: jdbc:mysql://localhost:3306/lottery?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC&useSSL=false
           username: root
           password: root
           driver-class-name: com.mysql.cj.jdbc.Driver
         db2: # 数据源2配置
-          url: jdbc:mysql://localhost:3306/imooc_coupon_data?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
+          url: jdbc:mysql://localhost:3306/imooc_coupon_data?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&useSSL=false
           username: root
           password: root
           driver-class-name: com.mysql.cj.jdbc.Driver

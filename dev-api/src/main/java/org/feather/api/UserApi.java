@@ -6,10 +6,10 @@ import org.feather.common.JsonResponse;
 import org.feather.dto.UserDTO;
 import org.feather.service.IUserService;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 /**
  * @projectName: dev-common
@@ -44,5 +44,12 @@ public class UserApi {
     public  JsonResponse<String> exportExcel(){
             userService.exportExcel();
             return JsonResponse.success("导出成功");
+    }
+
+    @ApiOperation(value = "导入用户",httpMethod = "POST", produces = "application/json")
+    @PostMapping("/importUser")
+    public  JsonResponse<String> importUser(@RequestPart("file") MultipartFile file) throws IOException {
+        userService.importUser(file);
+        return JsonResponse.success("导入成功");
     }
 }
