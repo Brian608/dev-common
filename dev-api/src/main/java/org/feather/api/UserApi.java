@@ -2,9 +2,11 @@ package org.feather.api;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.feather.common.JsonResponse;
 import org.feather.dto.UserDTO;
 import org.feather.service.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,15 +23,13 @@ import java.io.IOException;
  * @version: 1.0
  */
 @Api(tags = "用户管理")
+//构造注入
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @RestController
 @RequestMapping("/user")
 public class UserApi {
 
         private  final  IUserService userService;
-
-        public UserApi(IUserService userService){
-            this.userService=userService;
-        }
 
 
     @ApiOperation(value = "添加用户",httpMethod = "POST", produces = "application/json")
