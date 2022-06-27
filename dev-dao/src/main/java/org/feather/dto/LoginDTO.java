@@ -17,4 +17,6 @@ public class LoginDTO {
 
     private String  kaptcha;
 
+    private String phone;
+
 }

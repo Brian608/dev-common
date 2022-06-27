@@ -2,8 +2,6 @@ package org.feather.utils;
 
 import com.google.gson.Gson;
 
-import java.io.IOException;
-
 /**
  * @author feather
  * @projectName dev-common

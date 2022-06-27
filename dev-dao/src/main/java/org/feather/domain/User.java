@@ -47,6 +47,8 @@ public class User extends Model<User> {
     @ExcelProperty(index = 3, value = "邮箱")
     private String email;
 
+    private String salt;
+
     /**
      * 1 男 2 女
      */

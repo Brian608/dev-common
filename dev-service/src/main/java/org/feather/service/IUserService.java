@@ -44,8 +44,10 @@ public interface IUserService {
    void  importUser(MultipartFile file) throws IOException;
 
 
-  String  createUserToken(User user);
+  //String  createUserToken(User user);
 
 
-    String generateToken(String src);
+//    String generateToken(String src);
+//
+    User getUserByPhone(String phone);
 }
