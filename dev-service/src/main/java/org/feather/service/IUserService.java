@@ -20,6 +20,8 @@ public interface IUserService {
 
     List<User>   getAll();
 
+    User getCurrentUserByToken(String token);
+
     /**
      * 导出用户
      */

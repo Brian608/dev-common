@@ -48,6 +48,8 @@ public class User extends Model<User> {
     @ExcelProperty(index = 4, value = "性别",converter = GenderConverter.class)
     private Integer gender;
 
+    private String areaCode;
+
 
     @DateTimeFormat("yyyy-MM-dd HH:mm:ss")
     @ExcelProperty(index = 5, value = "创建时间")

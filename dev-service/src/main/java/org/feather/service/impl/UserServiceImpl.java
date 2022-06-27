@@ -1,5 +1,6 @@
 package org.feather.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.alibaba.excel.EasyExcel;
@@ -48,6 +49,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>  implements I
     @Override
     public List<User> getAll() {
         return  this.getBaseMapper().selectList(null);
+    }
+
+    @Override
+    public User getCurrentUserByToken(String token) {
+        if (StrUtil.isBlank(token)) {
+            log.info("accessToken为空");
+            return null;
+        }
+        return null;
     }
 
     @Override
