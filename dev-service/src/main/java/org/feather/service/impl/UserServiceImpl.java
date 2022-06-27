@@ -4,22 +4,24 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.alibaba.excel.EasyExcel;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.feather.domain.User;
+import org.feather.dto.LoginDTO;
 import org.feather.dto.UserDTO;
+import org.feather.exception.ConditionException;
 import org.feather.listener.ExcelListener;
 import org.feather.mapper.UserMapper;
 import org.feather.service.IUserService;
+import org.feather.utils.RSAUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @projectName: dev-common
@@ -42,8 +44,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>  implements I
         log.info("入参user:{}",userDTO);
         User user= new User();
         BeanUtils.copyProperties(userDTO,user);
+        try {
+            user.setPassword(RSAUtil.encrypt(user.getPassword()));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         user.setCreateTime(new Date());
         this.save(user);
+    }
+
+    @Override
+    public Map<String, Object> login(LoginDTO loginDTO) {
+        Map<String, Object> resultMap=new HashMap<>();
+        User user = this.baseMapper.selectOne(new QueryWrapper<User>().lambda().eq(User::getUsername, loginDTO.getUsername()));
+        if (user!=null){
+            resultMap.put("userInfo",user);
+            resultMap.put("accessToken",this.createUserToken(user));
+        }
+        return  resultMap;
     }
 
     @Override
@@ -99,5 +117,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>  implements I
 
     }
 
+    @Override
+    public String createUserToken(User user) {
+        if (user==null){
+            return null;
+        }
+        try {
+            return generateToken(user.getUsername().concat(user.getPassword()).concat(user.getPhone()));
+            //redis中写入token
+        } catch (Exception e) {
+            throw new ConditionException("生成userToken失败");
+        }
+    }
 
+    @Override
+    public String generateToken(String src) {
+        String uuid = UUID.randomUUID().toString();
+        try {
+            return RSAUtil.encrypt(uuid.concat(src));
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ConditionException("生成token异常");
+        }
+    }
 }

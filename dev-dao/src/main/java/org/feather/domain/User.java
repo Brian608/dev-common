@@ -33,8 +33,13 @@ public class User extends Model<User> {
     private Long id;
 
 
+
+    private String username;
+
+    private String password;
+
     @ExcelProperty(index = 1, value = "姓名")
-    private String name;
+    private String realName;
 
     @ExcelProperty(index = 2, value = "手机")
     private String phone;

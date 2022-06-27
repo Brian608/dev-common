@@ -22,8 +22,16 @@ public class UserDTO {
 
     @Length(max = 50,message = "姓名最长50")
     @NotNull(message = "消息内容不能为空")
-    @ApiModelProperty(name = "name" , value = "姓名",required = true)
+    @ApiModelProperty(name = "name" , value = "用户名",required = true)
     private String name;
+
+    @ApiModelProperty(name = "realName" , value = "真实姓名")
+    private String realName;
+
+
+    @NotNull(message = "密码不能为空")
+    @ApiModelProperty(name = "password" , value = "密码",required = true)
+    private String password;
 
 
     @NotNull(message = "手机号不能为空")
