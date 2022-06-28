@@ -21,15 +21,17 @@ import javax.validation.constraints.Pattern;
 public class UserDTO {
 
     @Length(max = 50,message = "姓名最长50")
-    @NotNull(message = "消息内容不能为空")
-    @ApiModelProperty(name = "name" , value = "用户名",required = true)
-    private String name;
+    @Pattern(regexp = "^[a-zA-Z0-9]+$",message = "用户名只能包含数字和字母，并且不能超过50个字符")
+    @NotNull(message = "用户名不能为空")
+    @ApiModelProperty(name = "username" , value = "用户名",required = true)
+    private String username;
 
     @ApiModelProperty(name = "realName" , value = "真实姓名")
     private String realName;
 
 
     @NotNull(message = "密码不能为空")
+    @Pattern(regexp = "^^(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![A-Z\\\\W_]+$)(?![a-z0-9]+$)(?![a-z\\\\W_]+$)(?![0-9\\\\W_]+$)[a-zA-Z0-9\\\\W_]{8,}$",message = "密码格式错误，密码必须是包含大写字母、小写字母、数字、特殊符号组合")
     @ApiModelProperty(name = "password" , value = "密码",required = true)
     private String password;
 
@@ -53,4 +55,9 @@ public class UserDTO {
     @ApiModelProperty(name = "gender" , value = "性别 1 男    2 女",required = true)
     @NotNull(message = "性别")
     private Integer gender;
+
+
+    @ApiModelProperty(name = "areaCode" , value = "区域code",required = true)
+    @NotNull(message = "区域不能为空")
+    private String areaCode;
 }

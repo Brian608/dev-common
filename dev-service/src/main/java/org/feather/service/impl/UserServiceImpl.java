@@ -56,9 +56,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>  implements I
         String password = user.getPassword();
         String rawPassword;
         try{
-            rawPassword = RSAUtil.decrypt(password);
+            rawPassword = RSAUtil.encrypt(password);
         }catch (Exception e){
-            throw new ConditionException("密码解密失败！");
+            throw new ConditionException("密码加密失败!");
         }
         String md5Password = MD5Util.sign(rawPassword, salt, "UTF-8");
         user.setSalt(salt);
@@ -70,11 +70,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>  implements I
     @Override
     public Map<String, Object> login(LoginDTO loginDTO) {
         Map<String, Object> resultMap=new HashMap<>();
-        String phone=loginDTO.getPhone();
-        if (StringUtils.isBlank(phone)){
-            throw  new ConditionException("手机号不能为空！");
-        }
-        User dbUser = this.getUserByPhone(phone);
+        User dbUser = this.getUserByPhone(loginDTO.getPhone());
         if (dbUser==null){
             throw  new ConditionException("当前用户不存在");
         }
