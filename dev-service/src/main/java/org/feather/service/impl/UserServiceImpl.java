@@ -53,12 +53,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>  implements I
         BeanUtils.copyProperties(userDTO,user);
         Date now = new Date();
         String salt = String.valueOf(now.getTime());
+        //前端经过rsa加密的密码
         String password = user.getPassword();
         String rawPassword;
         try{
-            rawPassword = RSAUtil.encrypt(password);
+            rawPassword = RSAUtil.decrypt(password);
         }catch (Exception e){
-            throw new ConditionException("密码加密失败!");
+            throw new ConditionException("密码解密失败!");
         }
         String md5Password = MD5Util.sign(rawPassword, salt, "UTF-8");
         user.setSalt(salt);

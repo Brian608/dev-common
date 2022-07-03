@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.feather.common.JsonResponse;
+import org.feather.dto.LoginDTO;
 import org.feather.dto.UserDTO;
 import org.feather.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * @projectName: dev-common
@@ -29,7 +31,7 @@ import java.io.IOException;
 @RequestMapping("/user")
 public class UserApi {
 
-        private  final  IUserService userService;
+    private final IUserService userService;
 
 
     @ApiOperation(value = "添加用户",httpMethod = "POST", produces = "application/json")
@@ -37,6 +39,13 @@ public class UserApi {
     public JsonResponse<String> addUser(@RequestBody @Validated UserDTO userDTO) {
         userService.addUser(userDTO);
         return JsonResponse.success();
+    }
+
+    @ApiOperation(value = "登录",httpMethod = "POST", produces = "application/json")
+    @PostMapping("/login")
+    public JsonResponse<Map<String, Object>> login(@RequestBody LoginDTO loginDTO) {
+        Map<String, Object> map = userService.login(loginDTO);
+        return new JsonResponse(map);
     }
 
     @ApiOperation(value = "导出用户",httpMethod = "POST", produces = "application/json")

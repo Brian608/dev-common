@@ -31,7 +31,7 @@ public class UserDTO {
 
 
     @NotNull(message = "密码不能为空")
-    @Pattern(regexp = "^^(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![A-Z\\\\W_]+$)(?![a-z0-9]+$)(?![a-z\\\\W_]+$)(?![0-9\\\\W_]+$)[a-zA-Z0-9\\\\W_]{8,}$",message = "密码格式错误，密码必须是包含大写字母、小写字母、数字、特殊符号组合")
+   // @Pattern(regexp = "^^(?![a-zA-Z]+$)(?![A-Z0-9]+$)(?![A-Z\\\\W_]+$)(?![a-z0-9]+$)(?![a-z\\\\W_]+$)(?![0-9\\\\W_]+$)[a-zA-Z0-9\\\\W_]{8,}$",message = "密码格式错误，密码必须是包含大写字母、小写字母、数字、特殊符号组合")
     @ApiModelProperty(name = "password" , value = "密码",required = true)
     private String password;
 
