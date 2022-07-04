@@ -7,11 +7,13 @@ import org.feather.common.JsonResponse;
 import org.feather.dto.LoginDTO;
 import org.feather.dto.UserDTO;
 import org.feather.service.IUserService;
+import org.feather.support.UserSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Map;
 
@@ -33,6 +35,8 @@ public class UserApi {
 
     private final IUserService userService;
 
+    private final UserSupport userSupport;
+
 
     @ApiOperation(value = "添加用户",httpMethod = "POST", produces = "application/json")
     @PostMapping("/addUser")
@@ -46,6 +50,22 @@ public class UserApi {
     public JsonResponse<Map<String, Object>> login(@RequestBody LoginDTO loginDTO) {
         Map<String, Object> map = userService.login(loginDTO);
         return new JsonResponse(map);
+    }
+
+    @ApiOperation(value = "退出登录",httpMethod = "POST", produces = "application/json")
+    @PostMapping("/loginOut")
+    public JsonResponse<String> loginOut(HttpServletRequest request) {
+        String refreshToken = request.getHeader("refreshToken");
+        Long userId = userSupport.getCurrentUserInfo().getId();
+        userService.loginOut(refreshToken,userId);
+        return JsonResponse.success();
+    }
+
+    @ApiOperation(value = "退出登录",httpMethod = "POST", produces = "application/json")
+    @PostMapping("/access-token")
+    public JsonResponse<String> refreshAccessToken(HttpServletRequest request) throws Exception {
+        String refreshToken = request.getHeader("refreshToken");
+        return JsonResponse.success(userService.refreshAccessToken(refreshToken));
     }
 
     @ApiOperation(value = "导出用户",httpMethod = "POST", produces = "application/json")

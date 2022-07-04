@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.feather.domain.RefreshTokenDetails;
 import org.feather.domain.User;
 import org.feather.dto.LoginDTO;
 import org.feather.dto.UserDTO;
@@ -90,6 +91,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>  implements I
         resultMap.put("userInfo",dbUser);
         try {
             resultMap.put("accessToken", TokenUtil.generateToken(dbUser.getId()));
+            String refreshToken = TokenUtil.generateRefreshToken(dbUser.getId());
+            //从redis先产出refreshToken
+            //再添加refreshToken
+            resultMap.put("refreshToken",refreshToken);
         } catch (Exception e) {
             throw new ConditionException("生成token失败！");
         }
@@ -102,6 +107,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>  implements I
             return  null;
         }
         return this.getBaseMapper().selectOne(new QueryWrapper<User>().lambda().eq(User::getPhone,phone));
+    }
+
+    @Override
+    public void loginOut(String refreshToken, Long userId) {
+        //从redis中删除refreshToken
+    }
+
+    @Override
+    public String refreshAccessToken(String refreshToken) throws Exception {
+        //从redis中获取到refreshToken  转换成 RefreshTokenDetails
+        //伪代码  假设获取到的伪refreshTokenDetails
+        RefreshTokenDetails refreshTokenDetails=new RefreshTokenDetails();
+        if (refreshTokenDetails==null){
+            throw new ConditionException("555","token过期");
+        }
+        Long userId = refreshTokenDetails.getUserId();
+      return TokenUtil.generateToken(userId);
+
     }
 
     @Override

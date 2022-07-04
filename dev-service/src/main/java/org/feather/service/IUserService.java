@@ -54,4 +54,17 @@ public interface IUserService {
     //    String generateToken(String src);
 //
     User getUserByPhone(String phone);
+
+    /**
+     * 登出
+     * @param refreshToken
+     * @param userId
+     */
+    void loginOut(String refreshToken, Long userId);
+
+    /**
+     * 刷新token
+     * @param refreshToken
+     */
+    String refreshAccessToken(String refreshToken) throws Exception;
 }
