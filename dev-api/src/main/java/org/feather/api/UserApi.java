@@ -3,6 +3,7 @@ package org.feather.api;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.feather.annoation.Log;
 import org.feather.common.JsonResponse;
 import org.feather.dto.LoginDTO;
 import org.feather.dto.UserDTO;
@@ -38,6 +39,7 @@ public class UserApi {
     private final UserSupport userSupport;
 
 
+    @Log(description = "添加用户")
     @ApiOperation(value = "添加用户",httpMethod = "POST", produces = "application/json")
     @PostMapping("/addUser")
     public JsonResponse<String> addUser(@RequestBody @Validated UserDTO userDTO) {
@@ -45,6 +47,7 @@ public class UserApi {
         return JsonResponse.success();
     }
 
+    @Log(description = "登录")
     @ApiOperation(value = "登录",httpMethod = "POST", produces = "application/json")
     @PostMapping("/login")
     public JsonResponse<Map<String, Object>> login(@RequestBody LoginDTO loginDTO) {

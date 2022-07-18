@@ -1,6 +1,5 @@
 package org.feather.test;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**

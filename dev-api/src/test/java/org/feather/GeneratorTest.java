@@ -25,7 +25,7 @@ public class GeneratorTest {
 
     @Test
     public  void generatorTest(){
-        codeGenerator.generator("user");
+        codeGenerator.generator("sys_log");
     }
 
 }
