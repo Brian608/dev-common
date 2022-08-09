@@ -1,5 +1,7 @@
 package org.feather.utils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
@@ -25,6 +27,21 @@ public class CommonUtils {
     public static <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {
         Map<Object, Boolean> concurrentHashMap = new ConcurrentHashMap<>();
         return t -> concurrentHashMap.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
+    }
+
+    public  static String generateHashCode(String ...strs){
+        Long result=0L;
+        for (String s: strs) {
+            result+=convert(s).hashCode();
+        }
+        return String.valueOf(result);
+    }
+
+    public static  String convert(String str){
+        if (StringUtils.isBlank(str)){
+            return "";
+        }
+        return  str;
     }
 
 }

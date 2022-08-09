@@ -1,0 +1,40 @@
+synchronized的底层实现
+不能锁integer  long string等
+锁的是对象，不是代码  this xxx.class
+jdk早期，重量级锁 os
+后来改进
+sync （object）
+markkeyword  记录这个线程的id（偏向锁）
+如果线程争用，升级为自旋锁
+10次数以后
+升级为重量级锁，--os
+
+执行时间短（枷锁代码）线程数少，用自旋锁
+执行时间长，线程数多，用系统锁
+
+
+volatile
+保证了可见行  缓存一致性
+静止指令重排序（cpu）
+
+
+CAS（无锁优化  自旋）
+cas(V,Expected,newValue)
+if V==E
+V == new
+otherwise try again
+cpu 原语指令
+
+ABA问题
+加Version
+如果是基础类型，无所谓
+如果是饮用类型，有问题，中途经历了很多
+
+
+ReentrantLock vs synchronized
+cas vs sync
+try lock  unlock
+lockinterupptibly
+公平和非公平
+
+
