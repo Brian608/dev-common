@@ -30,8 +30,10 @@ class SemaphoreWorker implements Runnable {
 
     }
     @Override public void run() {
-        try { log("is waiting for a permit!");
-            semaphore.acquire(); log("acquired a permit!");
+        try {
+            log("is waiting for a permit!");
+            semaphore.acquire();
+            log("acquired a permit!");
             log("executed!");
         } catch (InterruptedException e) {
             e.printStackTrace();
