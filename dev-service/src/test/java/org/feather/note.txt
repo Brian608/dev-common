@@ -37,4 +37,61 @@ try lock  unlock
 lockinterupptibly
 公平和非公平
 
+jdk 包含jre ，jre 包含jvm
+
+jdk=jre+development kit
+jre=jvm+core+lib
+jvm
+
+类加载过程
+1.loading
+ 1.双亲委派  安全性
+ 2.lazyloading 五种情况
+   1. -new getstatic putstatic invokestatich##,
+ -java.lang.reflect对类进行反射调用时
+ - 初始化子类的时候，父类首先初始化
+ -虚拟机启动时，被执行的主类必须初始化
+ -mia@*Hjava.lang.invoke.MethodHandle#7Hr49taR*REF_getstaticREF_putstatic
+ REF_ invokestatic的方法句柄时，该类必须初始化
+ 3. ClassLoader#9:455
+ 1. findInCache -> parent.loadClass -> findClass()
+ 1. extends ClassLoader
+ 2. overwrite findClass() -> defineClass(byte(] -> Class clazz)
+ 3.加密
+ 5. 混合执行 编译执行 解释执行
+   1 。检测热点代码：xxxx
+2.linking
+   1.verification
+   验证文件是否符合jvm规范
+   2.prepara tion
+   静态成员变量默认值
+   3.resolution
+   将类，方法，属性等符号引用改为直接引用
+   常量池中的各种符号引用解析为指针，偏移量等内存地址的直接引用
+3.initialing
+  调用类初始化代码   Clinit
+
+  总结
+  1。load -默认值--初始值
+  2。new -申请内存-默认值-初始值
+
+类加载器
+BootStrap
+Extension
+App
+CustomClassLoader
+
+classload 过程， 调用findClass方法，模版模式
+
+
+           myiam         innodb
+索引类型    非聚族索引    聚族索引
+支持事务     否         是
+支持表锁     是          是
+支持行锁     否          是
+支持外建     否          是
+支持全文检索   是          是
+适合操作类型   大量select   大量insert update delete
+
+
 
